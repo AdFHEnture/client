@@ -41,6 +41,11 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/ads/www.emir-soyturk.com",
     icon: <WalletIcon className="h-4 w-4" />,
   },
+  {
+    label: "Advertiser",
+    href: "/advertiser",
+    icon: <WalletIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {
