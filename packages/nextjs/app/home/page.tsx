@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-// import Image from "next/image";
-// import logo from "../../components/assets/logo.svg";
+import { useEffect, useState } from "react";
 import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
 import "react-datepicker/dist/react-datepicker.css";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import externalContracts from "~~/contracts/externalContracts";
 import { pieChartData } from "~~/utils/data";
 
@@ -18,8 +15,9 @@ interface CheckboxOption {
 }
 
 const Home = () => {
-  const { chain } = useAccount();
+  const { chain, address } = useAccount();
   const { data: hash, error, writeContract } = useWriteContract();
+
   const [adName, setAdName] = useState("");
   const [description, setDescription] = useState("");
   const [userType, setUserType] = useState("advertiser");
@@ -34,8 +32,8 @@ const Home = () => {
     setAdName("");
     setDescription("");
     setWeek(1);
-    setSelectedCheckboxesAdvertiser([]);
-    setSelectedCheckboxesUser([]);
+    setSelectedCheckboxesAdvertiser(new Array(checkboxOptions.length).fill(false));
+    setSelectedCheckboxesUser(new Array(checkboxOptions.length).fill(false));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,8 +41,6 @@ const Home = () => {
   };
 
   const handleSubmitCreateProfile = () => {
-    console.log(selectedCheckboxesUser);
-    console.log(chain);
     if (!chain || !chain.id) {
       return;
     }
@@ -112,6 +108,18 @@ const Home = () => {
     newCheckboxes[index] = !newCheckboxes[index];
     setSelectedCheckboxesUser(newCheckboxes);
   };
+
+  const { data: userVector } = useReadContract({
+    address: externalContracts[8008135].AdMatcher.address,
+    functionName: "getUserVector",
+    args: [address || "0x"],
+    abi: externalContracts[8008135].AdMatcher.abi,
+  });
+
+  useEffect(() => {
+    console.log("user vector", userVector);
+    setSelectedCheckboxesUser(userVector as boolean[]);
+  }, [userVector]);
 
   return (
     <div className="flex flex-col items-center h-screen gap-4 p-12">

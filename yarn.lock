@@ -4170,6 +4170,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.0.0":
+  version: 18.19.39
+  resolution: "@types/node@npm:18.19.39"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: d1de755983127b405458c427ae2cf77c89d120a617ca70999086a75fb0b6c6dbc1bdddfe1a8a7374c9ae55ed0589a2bd023ffb3b09ee25440c013afc6502dfe6
+  languageName: node
+  linkType: hard
+
 "@types/nprogress@npm:^0":
   version: 0.2.3
   resolution: "@types/nprogress@npm:0.2.3"
@@ -4822,6 +4831,26 @@ __metadata:
     typescript:
       optional: true
   checksum: 411a18c042799cc9be7661d30a8c8da9bb12edc68141c3ec315ffd0b981dc5c490a45a8ce297847c1adb5be2acb290cb49bdc7faa1dcc09a882ced0be557c481
+  languageName: node
+  linkType: hard
+
+"@wagmi/core@npm:^2.11.7":
+  version: 2.11.7
+  resolution: "@wagmi/core@npm:2.11.7"
+  dependencies:
+    eventemitter3: 5.0.1
+    mipd: 0.0.5
+    zustand: 4.4.1
+  peerDependencies:
+    "@tanstack/query-core": ">=5.0.0"
+    typescript: ">=5.0.4"
+    viem: 2.x
+  peerDependenciesMeta:
+    "@tanstack/query-core":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 2cc8c06b886683ffda13cfba0172ccabb68f72b458852f0275ccb0bad937c1ccb74bf8dd42f4d89fc5b92a88740aef2d7876c361da0ee3f030f3d8f8b49f26ff
   languageName: node
   linkType: hard
 
@@ -8799,6 +8828,17 @@ __metadata:
   dependencies:
     pend: ~1.2.0
   checksum: c8585fd5713f4476eb8261150900d2cb7f6ff2d87f8feb306ccc8a1122efd152f1783bdb2b8dc891395744583436bfd8081d8e63ece0ec8687eeefea394d4ff2
+  languageName: node
+  linkType: hard
+
+"fhenixjs@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "fhenixjs@npm:0.3.0"
+  dependencies:
+    "@types/node": ^18.0.0
+    tweetnacl: ^1.0.3
+    tweetnacl-util: ^0.15.1
+  checksum: ef8750e5604d7daca80a414986d6de68d0aaa5e9a8fc9d97069d16a6d054145c9ce8d3a7c4d612704c12eac86b07f51e1012bc66caf833e0e89c7de3ecf7e765
   languageName: node
   linkType: hard
 
@@ -14069,8 +14109,10 @@ __metadata:
     "@mui/x-charts": ^7.10.0
     "@types/react-datepicker": ^6.2.0
     "@types/request": ^2
+    "@wagmi/core": ^2.11.7
     axios: ^1.7.2
     date-fns: ^3.6.0
+    fhenixjs: ^0.3.0
     font-awesome: ^4.7.0
     hardhat: ^2.22.6
     husky: ^8.0.1

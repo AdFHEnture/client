@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
+import { useReadContract } from "wagmi";
 import { getAdByAdId } from "~~/api";
+import externalContracts from "~~/contracts/externalContracts";
 
 const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
   const { imageUrl, websiteUrl } = props;
@@ -20,8 +22,6 @@ const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
       ></div>
       <div className="absolute inset-0 rounded-lg bg-black opacity-30"></div>
       <div className="relative z-10">
-        {/* <h1 className="text-2xl text-white">{imageUrl}</h1> */}
-        {/* <span className="text-md text-white">{websiteUrl}</span> */}
         <div className="absolute left-0 top-0 border w-[36px] h-[20px] rounded text-center text-xs text-white">Ad</div>
       </div>
     </a>
@@ -34,6 +34,15 @@ const Ads = ({ params }: { params: { link: string } }) => {
   const [decodedLink, setDecodedLink] = useState<string | null>(null);
   const [ad, setAd] = useState<{ imageUrl: string; websiteUrl: string } | null>(null);
 
+  const { data: bestAd, error } = useReadContract({
+    address: externalContracts[8008135].AdMatcher.address,
+    functionName: "findBestAdPermitSealedFromSenderAddressWithoutPermit",
+    abi: externalContracts[8008135].AdMatcher.abi,
+  });
+
+  console.log("best ad ", bestAd);
+  console.log("best ad error ", error);
+
   useEffect(() => {
     if (encodedLink) {
       const fullLink = decodeURIComponent(encodedLink);
@@ -43,7 +52,6 @@ const Ads = ({ params }: { params: { link: string } }) => {
   }, [encodedLink, searchParams]);
 
   useEffect(() => {
-    // Replace this with actual API call
     getAdByAdId("2").then(ad => {
       setAd(ad);
     });
@@ -54,14 +62,14 @@ const Ads = ({ params }: { params: { link: string } }) => {
   }
 
   return (
-    <div className="flex flex-col items-center h-screen gap-0 py-12 w-full">
+    <div className="flex flex-col items-center h-screen gap-0 py-0 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
         {ad && <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} />}
         <div className="w-full">
           <iframe
             src={`https://${decodedLink}`}
             width="100%"
-            height="750px"
+            height="850px"
             style={{ border: "none" }}
             title={"site"}
           />
