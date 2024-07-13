@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import logo from "../../components/assets/logo.svg";
+// import Image from "next/image";
+// import logo from "../../components/assets/logo.svg";
 import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
@@ -116,7 +116,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center h-screen gap-4 p-12">
       <div className="flex flex-col items-center justify-center">
-        <Image priority src={logo} alt="" />
+        {/* <Image priority src={logo} alt="" /> */}
         <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
         <h2 className="text-xl text-white text-center">
           Neque porro quisquam est qui <br /> dolorem
@@ -214,7 +214,7 @@ const Home = () => {
                         e.stopPropagation();
                         handleCheckboxChangeAdvertiser(option);
                       }}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
+                      className="w-[16px] h-[16px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
                     />
 
                     <label htmlFor={`checkbox-${index}`} className="text-[#6F7482] text-lg pl-4">
@@ -227,7 +227,7 @@ const Home = () => {
           </div>
           <button
             type="submit"
-            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110 mb-4"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110 mb-4 rounded"
             onClick={handleSubmitAdvertiser}
           >
             Pay & Submit
@@ -242,8 +242,8 @@ const Home = () => {
           )}
         </form>
       ) : (
-        <div className="flex flex-col justify-center items-center w-full h-full mx-2 rounded p-4 relative">
-          <span className="text-4xl text-center mt-4 mb-8">Create Profile</span>
+        <div className="flex flex-col justify-start items-center w-full h-full mx-2 rounded p-4 relative">
+          <span className="text-4xl text-center mb-8">Create Profile</span>
           <div className="grid grid-cols-2 w-1/4">
             {checkboxOptions.map((option, index) => (
               <div key={index} className="flex justify-start items-center rounded-lg pr-6 pl-8 my-2 cursor-pointer">
@@ -257,7 +257,7 @@ const Home = () => {
                     e.stopPropagation();
                     handleCheckboxChangeUser(option);
                   }}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
+                  className="w-[16px] h-[16px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
                 />
 
                 <label htmlFor={`checkbox-${index}`} className="text-[#6F7482] text-lg pl-4">
@@ -268,7 +268,7 @@ const Home = () => {
           </div>
           <button
             type="submit"
-            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient mt-8 transition-all duration-300 hover:scale-110"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient mt-8 transition-all duration-300 hover:scale-110 rounded"
             onClick={handleSubmitCreateProfile}
           >
             Submit

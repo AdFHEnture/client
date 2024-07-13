@@ -6,12 +6,12 @@ const WebsiteCard = ({ name, url, imgSrc }) => {
   return (
     <Link
       href={`/ads/${url}`}
-      className="flex flex-row justify-between items-center w-[400px] h-[120px] border-2 border-white rounded p-4 m-4 hover:bg-custom-gradient hover:text-black transition-all duration-700 ease-in-out"
+      className="flex flex-row justify-center items-start w-[400px] h-[150px] border-2 border-white rounded p-4 m-4 hover:scale-110 transition-all duration-700 ease-in-out relative"
     >
-      <img className="max-w-[80px] max-h-[80px]" src={imgSrc} />
-      <div className="text-center">
-        <span className="text-xl">{name} & </span>
-        <span className="text-sm">{url}</span>
+      <img className="absolute left-0 top-0 w-full h-full opacity-50" src={imgSrc} />
+      <div className="text-center flex flex-col justify-between items-stretch w-full h-full">
+        <span className="text-2xl text-white text-bold z-10">{name}</span>
+        <span className="text-xl text-white text-bold z-10">{url}</span>
       </div>
     </Link>
   );
@@ -22,36 +22,32 @@ const Websites = () => {
     {
       name: "Scroll",
       url: "scroll.io",
-      imgSrc:
-        "https://media.licdn.com/dms/image/D4E0BAQF6gMSNL5xYCA/company-logo_200_200/0/1692892037062/scroll_io_logo?e=2147483647&v=beta&t=H0sTCb5XBPUvt7yKUD65kYY2qN9L5dd0udOMu48PkKk",
+      imgSrc: "https://mms.businesswire.com/media/20231017097939/en/1916843/23/fulllogo.jpg",
     },
     {
       name: "Fhenix",
       url: "www.docs.fhenix.zone",
-      imgSrc:
-        "https://media.licdn.com/dms/image/D4D0BAQFtUjFKqv_DJA/company-logo_200_200/0/1695715998703/fhenix_logo?e=2147483647&v=beta&t=U2cvAqKuWeEqE5Cb4HgyuBmVTUcBuZvsDi0JdivU3nw",
+      imgSrc: "https://cryptodaily.blob.core.windows.net/space/fhenix%201920%20X%201080.jpg",
     },
     {
       name: "GraphQL",
       url: "graphql.org",
-      imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png",
+      imgSrc: "https://adapulse.io/wp-content/uploads/2023/11/graphql-image-1.png",
     },
     {
       name: "Metamask",
       url: "metamask.io",
-      imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/800px-MetaMask_Fox.svg.png",
+      imgSrc: "https://nftnow.com/wp-content/uploads/2021/10/Metamask-How-To-Asset.png",
     },
     {
       name: "Zircuit",
       url: "stake.zircuit.com/",
-      imgSrc:
-        "https://dailyhodl.com/wp-content/uploads/2023/11/UPSCALED-Zircuit-Industry-Announcement-Featured-Image-Template.jpg",
+      imgSrc: "https://www.blockleaders.io/.image/t_share/MjA0NTY3NDczMzg5ODM5Njc1/image-placeholder-title.jpg",
     },
     {
       name: "Dynamics",
       url: "docs.dynamic.xyz",
-      imgSrc:
-        "https://assets-global.website-files.com/626692727bba3f384e008e8a/6499b49f1897ac582cef7cb0_logo-dynamic.png",
+      imgSrc: "https://cdn.prod.website-files.com/626692727bba3f384e008e8a/632d74b82fd2862796d5f6a0_logo-dark.svg",
     },
   ];
 
