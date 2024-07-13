@@ -17,33 +17,19 @@ type HeaderMenuLink = {
 };
 
 export const menuLinks: HeaderMenuLink[] = [
-  //   {
-  //     label: "Home",
-  //     href: "/",
-  //   },
-  //   {
-  //     label: "Debug Contracts",
-  //     href: "/debug",
-  //     icon: <BugAntIcon className="h-4 w-4" />,
-  //   },
-  //   {
-  //     label: "Smart Wallet",
-  //     href: "/safe",
-  //     icon: <WalletIcon className="h-4 w-4" />,
-  //   },
   {
     label: "Home",
     href: "/home",
     icon: <WalletIcon className="h-4 w-4" />,
   },
   {
-    label: "Ads",
-    href: "/ads/www.emir-soyturk.com",
+    label: "Advertiser",
+    href: "/advertiser",
     icon: <WalletIcon className="h-4 w-4" />,
   },
   {
-    label: "Advertiser",
-    href: "/advertiser",
+    label: "Websites",
+    href: "/websites",
     icon: <WalletIcon className="h-4 w-4" />,
   },
 ];

@@ -48,7 +48,7 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
           Paid: {paidValue}$
         </span>
         <span className="text-white text-3xl text-center">Audience</span>
-        <div className="absolute top-60 left-[30%]">
+        <div className="absolute top-60 left-[27%]">
           <PieChart
             series={[
               {
@@ -58,7 +58,7 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
                 paddingAngle: 5,
                 highlightScope: { faded: "global", highlighted: "item" },
                 faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
-                arcLabel: item => `${item.label} (${item.value})`,
+                arcLabel: item => `${item.label} (${item.value}%)`,
                 arcLabelMinAngle: 45,
               },
             ]}

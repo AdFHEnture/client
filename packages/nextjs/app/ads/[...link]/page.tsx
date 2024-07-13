@@ -45,8 +45,6 @@ const Ads = ({ params }: { params: { link: string } }) => {
   return (
     <div className="flex flex-col items-center h-screen gap-0 py-12 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
-        <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
-
         <AdCard name={adList[0].name} description={adList[0].description} />
         <div className="w-full">
           <iframe
