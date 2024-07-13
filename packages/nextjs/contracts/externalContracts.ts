@@ -472,6 +472,205 @@ const externalContracts = {
       },
     },
   },
+  534351: {
+    AdContract: {
+      address: "0xc9f8f36AAd4aB3336E17FE37FcFd1EfADe5d7205",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_mailboxAddress",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "adId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "advertiser",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "adTitle",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "expiresAt",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "budget",
+              type: "uint256",
+            },
+          ],
+          name: "AdCreated",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "COST_PER_SECOND",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "ads",
+          outputs: [
+            {
+              internalType: "address payable",
+              name: "advertiser",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "adTitle",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "adContent",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "createdAt",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expiresAt",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "budget",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isActive",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_adTitle",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_adContent",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "_durationInSeconds",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_budget",
+              type: "uint256",
+            },
+            {
+              internalType: "bool[5]",
+              name: "_adVector",
+              type: "bool[5]",
+            },
+          ],
+          name: "createAd",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "mailbox",
+          outputs: [
+            {
+              internalType: "contract IMailbox",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "nextAdId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+    },
+  },
 } as const;
 
 export default externalContracts satisfies GenericContractsDeclaration;
