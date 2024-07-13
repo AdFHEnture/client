@@ -117,8 +117,9 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log("user vector", userVector);
-    setSelectedCheckboxesUser(userVector as boolean[]);
+    if (userVector && userVector.length > 0 && userVector[0] != null) {
+      setSelectedCheckboxesUser(userVector as boolean[]);
+    }
   }, [userVector]);
 
   return (

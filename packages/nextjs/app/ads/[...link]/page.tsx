@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
-import { useReadContract } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import { getAdByAdId } from "~~/api";
 import externalContracts from "~~/contracts/externalContracts";
 
@@ -31,12 +31,18 @@ const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
 const Ads = ({ params }: { params: { link: string } }) => {
   const searchParams = useSearchParams();
   const encodedLink = params.link;
+  const { address } = useAccount();
   const [decodedLink, setDecodedLink] = useState<string | null>(null);
   const [ad, setAd] = useState<{ imageUrl: string; websiteUrl: string } | null>(null);
 
-  const { data: bestAd, error } = useReadContract({
+  const {
+    data: bestAd,
+    error,
+    isFetched,
+  } = useReadContract({
     address: externalContracts[8008135].AdMatcher.address,
     functionName: "findBestAdPermitSealedFromSenderAddressWithoutPermit",
+    args: [address || "0x"],
     abi: externalContracts[8008135].AdMatcher.abi,
   });
 
@@ -52,10 +58,12 @@ const Ads = ({ params }: { params: { link: string } }) => {
   }, [encodedLink, searchParams]);
 
   useEffect(() => {
-    getAdByAdId("2").then(ad => {
-      setAd(ad);
-    });
-  }, []);
+    if (isFetched) {
+      getAdByAdId(bestAd?.toString() || "0").then(ad => {
+        setAd(ad);
+      });
+    }
+  }, [isFetched]);
 
   if (!decodedLink) {
     return <div>...Loading</div>;

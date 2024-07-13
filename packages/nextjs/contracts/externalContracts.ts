@@ -3,7 +3,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const externalContracts = {
   8008135: {
     AdMatcher: {
-      address: "0x26249D765CD737e62Ed04136b069cfDBDf8E68a3",
+      address: "0xb77a73524f32Ae60aa33CAE2C76ea498171EfdAc",
       abi: [
         {
           inputs: [],
@@ -268,7 +268,13 @@ const externalContracts = {
           type: "function",
         },
         {
-          inputs: [],
+          inputs: [
+            {
+              internalType: "address",
+              name: "sender",
+              type: "address",
+            },
+          ],
           name: "findBestAdPermitSealedFromSenderAddressWithoutPermit",
           outputs: [
             {
