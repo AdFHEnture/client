@@ -31,8 +31,8 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <WalletIcon className="h-4 w-4" />,
   },
   {
-    label: "Page-3",
-    href: "/page3",
+    label: "Home",
+    href: "/home",
     icon: <WalletIcon className="h-4 w-4" />,
   },
 ];
