@@ -57,39 +57,71 @@ const Home = () => {
     });
   };
 
+  const handleSubmitAdvertiser = () => {
+    console.log(selectedCheckboxesAdvertiser);
+    console.log(adName);
+    console.log(description);
+    console.log(week);
+    console.log(chain);
+
+    console.log([
+      adName,
+      description,
+      BigInt(week),
+      BigInt(0),
+      selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
+    ]);
+
+    if (!chain || !chain.id) {
+      return;
+    }
+
+    const contract = externalContracts[534351].AdContract;
+
+    try {
+      writeContract({
+        address: contract.address,
+        functionName: "createAd",
+        args: [
+          adName,
+          description,
+          BigInt(week),
+          BigInt(0),
+          selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
+        ],
+        abi: contract.abi,
+      });
+      console.log("Ad created successfully");
+    } catch (error) {
+      console.error("Error creating ad:", error);
+    }
+  };
+
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
   });
-
-  const [selectedCheckboxesAdvertiser, setSelectedCheckboxesAdvertiser] = useState<string[]>([]);
 
   const checkboxOptions: CheckboxOption[] = [
     { name: "option1", value: "Option 1" },
     { name: "option2", value: "Option 2" },
     { name: "option3", value: "Option 3" },
-    { name: "option4", value: "Opt ion 4" },
-    { name: "option5", value: "Opt ion 5" },
-    { name: "option6", value: "Option 6" },
-    { name: "option4", value: "Opti on 7" },
-    { name: "option5", value: "Option 8" },
-    { name: "option6", value: "Option 9" },
-    { name: "option6", value: "Opti on 10" },
+    { name: "option4", value: "Option 4" },
+    { name: "option5", value: "Option 5" },
   ];
+
+  const [selectedCheckboxesAdvertiser, setSelectedCheckboxesAdvertiser] = useState<boolean[]>(
+    new Array(checkboxOptions.length).fill(false),
+  );
 
   const [selectedCheckboxesUser, setSelectedCheckboxesUser] = useState<boolean[]>(
     new Array(checkboxOptions.length).fill(false),
   );
 
   const handleCheckboxChangeAdvertiser = (option: CheckboxOption) => {
-    if (selectedCheckboxesAdvertiser.includes(option.value)) {
-      setSelectedCheckboxesAdvertiser(selectedCheckboxesAdvertiser.filter(value => value !== option.value));
-    } else {
-      if (selectedCheckboxesAdvertiser.length < 5) {
-        setSelectedCheckboxesAdvertiser([...selectedCheckboxesAdvertiser, option.value]);
-      } else {
-        alert("You can select a maximum of 5 options.");
-      }
-    }
+    const index = checkboxOptions.findIndex(item => item.value === option.value);
+    const newCheckboxes = [...selectedCheckboxesAdvertiser];
+    newCheckboxes[index] = !newCheckboxes[index];
+    setSelectedCheckboxesAdvertiser(newCheckboxes);
   };
 
   const handleCheckboxChangeUser = (option: CheckboxOption) => {
@@ -167,7 +199,7 @@ const Home = () => {
                   shiftStep={1}
                   step={1}
                   marks
-                  min={1}
+                  min={0}
                   max={6}
                   sx={{
                     color: "#E7F3C6", // Ana renk
@@ -194,7 +226,7 @@ const Home = () => {
                       id={`checkbox-${index}`}
                       name={option.name}
                       value={option.value}
-                      checked={selectedCheckboxesAdvertiser.includes(option.value)}
+                      checked={selectedCheckboxesAdvertiser[index]}
                       onChange={e => {
                         e.stopPropagation();
                         handleCheckboxChangeAdvertiser(option);
@@ -213,6 +245,7 @@ const Home = () => {
           <button
             type="submit"
             className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110"
+            onClick={handleSubmitAdvertiser}
           >
             Pay & Submit
           </button>
