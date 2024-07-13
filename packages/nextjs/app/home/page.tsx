@@ -58,20 +58,6 @@ const Home = () => {
   };
 
   const handleSubmitAdvertiser = () => {
-    console.log(selectedCheckboxesAdvertiser);
-    console.log(adName);
-    console.log(description);
-    console.log(week);
-    console.log(chain);
-
-    console.log([
-      adName,
-      description,
-      BigInt(week),
-      BigInt(0),
-      selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
-    ]);
-
     if (!chain || !chain.id) {
       return;
     }
