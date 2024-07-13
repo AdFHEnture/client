@@ -6,13 +6,15 @@ const WebsiteCard = ({ name, url, imgSrc }) => {
   return (
     <Link
       href={`/ads/${url}`}
-      className="flex flex-row justify-center items-start w-[400px] h-[150px] border-2 border-white rounded p-4 m-4 hover:scale-110 transition-all duration-700 ease-in-out relative"
+      className="relative flex flex-row justify-center items-start w-[400px] h-[150px] border-2 border-white rounded p-4 m-4 overflow-hidden"
     >
-      <img className="absolute left-0 top-0 w-full h-full opacity-50" src={imgSrc} />
-      <div className="text-center flex flex-col justify-between items-stretch w-full h-full">
-        <span className="text-2xl text-white text-bold z-10">{name}</span>
-        <span className="text-xl text-white text-bold z-10">{url}</span>
-      </div>
+      <img
+        className="absolute left-0 top-0 w-full h-full object-cover opacity-50 transition-transform duration-700 ease-in-out hover:scale-110 z-0"
+        src={imgSrc}
+      />
+      <span className="absolute top-0 text-2xl bg-custom-gradient bg-clip-text text-transparent font-bold pointer-events-none">
+        {name}
+      </span>
     </Link>
   );
 };
@@ -30,9 +32,9 @@ const Websites = () => {
       imgSrc: "https://cryptodaily.blob.core.windows.net/space/fhenix%201920%20X%201080.jpg",
     },
     {
-      name: "GraphQL",
-      url: "graphql.org",
-      imgSrc: "https://adapulse.io/wp-content/uploads/2023/11/graphql-image-1.png",
+      name: "The Graph",
+      url: "thegraph.com",
+      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnHGufpCE24KXqYENnOjhp4Fcf9PvDM3kZDA&s",
     },
     {
       name: "Metamask",
@@ -47,7 +49,8 @@ const Websites = () => {
     {
       name: "Dynamics",
       url: "docs.dynamic.xyz",
-      imgSrc: "https://cdn.prod.website-files.com/626692727bba3f384e008e8a/632d74b82fd2862796d5f6a0_logo-dark.svg",
+      imgSrc:
+        "https://res.cloudinary.com/practicaldev/image/fetch/s--is0RUpX5--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://www.proof2work.com/_next/image%3Furl%3Dhttps%253A%252F%252Fcdn.sanity.io%252Fimages%252Fmre6fyj5%252Fproduction%252F7bb1e0aab117324f8edaebf0afe12109ac039665-600x395.jpg%26w%3D828%26q%3D75",
     },
   ];
 
