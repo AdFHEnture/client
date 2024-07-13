@@ -10,21 +10,21 @@ export type ScaffoldConfig = {
 };
 
 const fhenix = /*#__PURE__*/ defineChain({
-    id: 8008135,
-    name: 'Fhenix',
-    nativeCurrency: {
-      decimals: 18,
-      name: 'Fhenix Token',
-      symbol: 'FHE',
-    },
-    rpcUrls: {
-      default: { http: ['https://api.helium.fhenix.zone'] },
-    },
-    blockExplorers: {
-      default: { name: 'Fhenix Explorer', url: 'https://explorer.helium.fhenix.zone' },
-    },
-    testnet: true, // Set to true if this is a testnet
-  });
+  id: 8008135,
+  name: "Fhenix",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Fhenix Token",
+    symbol: "FHE",
+  },
+  rpcUrls: {
+    default: { http: ["https://api.helium.fhenix.zone"] },
+  },
+  blockExplorers: {
+    default: { name: "Fhenix Explorer", url: "https://explorer.helium.fhenix.zone" },
+  },
+  testnet: true, // Set to true if this is a testnet
+});
 
 const scaffoldConfig = {
   // The networks on which your DApp is live

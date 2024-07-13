@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import logo from "../../components/assets/logo.svg";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
 import "react-datepicker/dist/react-datepicker.css";
@@ -73,12 +73,11 @@ const Home = () => {
           adName,
           description,
           BigInt(week),
-          BigInt(0),
           selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
+          "0xEFB2A0589CEC7E3aB17Dd00b44C820C66FCf0BBc",
         ],
         abi: contract.abi,
       });
-      console.log("Ad created successfully");
     } catch (error) {
       console.error("Error creating ad:", error);
     }
@@ -151,23 +150,24 @@ const Home = () => {
                   <FontAwesomeIcon icon={faUser} className="text-[#6F7482] mr-2" />
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Website URL"
                     value={adName}
                     onChange={e => setAdName(e.target.value)}
                     className="p-2 bg-[#262626] text-[#6F7482] w-full border-none outline-none"
                   />
                 </div>
               </div>
-              <div className="flex flex-col mb-4">
-                <textarea
-                  placeholder="Description"
+              <div className="flex items-center border border-gray-300 rounded-lg bg-[#262626] p-2 w-full">
+                <FontAwesomeIcon icon={faImage} className="text-[#6F7482] mr-2" />
+                <input
+                  type="text"
                   value={description}
+                  placeholder="Image URL"
                   onChange={e => setDescription(e.target.value)}
-                  rows={3}
-                  className="p-8 border border-gray-300 rounded-lg bg-[#262626] text-[#6F7482] w-full"
+                  className="p-2 bg-[#262626] text-[#6F7482] w-full border-none outline-none"
                 />
               </div>
-              <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full mt-4">
                 <div className="w-full flex flex-row justify-between items-center">
                   <span className="text-xl">Expiry Date</span>
                   <span className="text-xl text-center w-20">{week} week</span>
@@ -227,11 +227,19 @@ const Home = () => {
           </div>
           <button
             type="submit"
-            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110 mb-4"
             onClick={handleSubmitAdvertiser}
           >
             Pay & Submit
           </button>
+          {hash && <div>Transaction Hash: {hash}</div>}
+          {isConfirming && <div>Waiting for confirmation...</div>}
+          {isConfirmed && <div>Transaction confirmed.</div>}
+          {error && (
+            <div>
+              Error: {error.message} {error.name}
+            </div>
+          )}
         </form>
       ) : (
         <div className="flex flex-col justify-center items-center w-full h-full mx-2 rounded p-4 relative">

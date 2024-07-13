@@ -474,7 +474,7 @@ const externalContracts = {
   },
   534351: {
     AdContract: {
-      address: "0xaDFD90Ec12Bf1c43c429623A03a4B5123a746495",
+      address: "0xf048a8B6eCff4B9c53f3B58227e6fCc68bf79940",
       abi: [
         {
           inputs: [
@@ -482,6 +482,11 @@ const externalContracts = {
               internalType: "address",
               name: "mailboxAddress",
               type: "address",
+            },
+            {
+              internalType: "uint32",
+              name: "_destinationChain",
+              type: "uint32",
             },
           ],
           stateMutability: "nonpayable",
@@ -505,7 +510,13 @@ const externalContracts = {
             {
               indexed: false,
               internalType: "string",
-              name: "adTitle",
+              name: "websiteUrl",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "imageUrl",
               type: "string",
             },
             {
@@ -516,15 +527,27 @@ const externalContracts = {
             },
             {
               indexed: false,
-              internalType: "uint256",
-              name: "budget",
-              type: "uint256",
-            },
-            {
-              indexed: false,
               internalType: "bool[5]",
               name: "adVector",
               type: "bool[5]",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "channelMessageId",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "destinationChain",
+              type: "uint32",
             },
           ],
           name: "AdCreated",
@@ -560,12 +583,12 @@ const externalContracts = {
             },
             {
               internalType: "string",
-              name: "adTitle",
+              name: "websiteUrl",
               type: "string",
             },
             {
               internalType: "string",
-              name: "adContent",
+              name: "imageUrl",
               type: "string",
             },
             {
@@ -578,16 +601,6 @@ const externalContracts = {
               name: "expiresAt",
               type: "uint256",
             },
-            {
-              internalType: "uint256",
-              name: "budget",
-              type: "uint256",
-            },
-            {
-              internalType: "bool",
-              name: "isActive",
-              type: "bool",
-            },
           ],
           stateMutability: "view",
           type: "function",
@@ -596,12 +609,12 @@ const externalContracts = {
           inputs: [
             {
               internalType: "string",
-              name: "adTitle",
+              name: "websiteUrl",
               type: "string",
             },
             {
               internalType: "string",
-              name: "adContent",
+              name: "imageUrl",
               type: "string",
             },
             {
@@ -610,14 +623,14 @@ const externalContracts = {
               type: "uint256",
             },
             {
-              internalType: "uint256",
-              name: "budget",
-              type: "uint256",
-            },
-            {
               internalType: "bool[5]",
               name: "adVector",
               type: "bool[5]",
+            },
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
             },
           ],
           name: "createAd",

@@ -3,21 +3,36 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
+import { getAdByAdId } from "~~/api";
 
-const AdCard = props => {
-  const { name, description } = props;
+const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
+  const { imageUrl, websiteUrl } = props;
   return (
-    <div className="w-[400px] h-auto text-center border-dashed border-2 rounded-lg p-4 m-4 absolute bottom-8 left-8">
-      <h1 className="text-2xl">{name}</h1>
-      <span className="text-md">{description}</span>
-      <div className="absolute left-0 top-0 m-4 border-2 w-[50px] h-[24px] rounded text-center text-sm">Ad</div>
-    </div>
+    <a
+      className="w-[400px] h-[90px] text-center rounded-lg p-2 m-2 absolute bottom-4 left-4 shadow-xl"
+      href={websiteUrl}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div
+        className={`absolute inset-0 rounded-lg bg-cover bg-center opacity-100`}
+        style={{ backgroundImage: `url(${imageUrl})` }}
+      ></div>
+      <div className="absolute inset-0 rounded-lg bg-black opacity-30"></div>
+      <div className="relative z-10">
+        {/* <h1 className="text-2xl text-white">{imageUrl}</h1> */}
+        {/* <span className="text-md text-white">{websiteUrl}</span> */}
+        <div className="absolute left-0 top-0 border w-[36px] h-[20px] rounded text-center text-xs text-white">Ad</div>
+      </div>
+    </a>
   );
 };
+
 const Ads = ({ params }: { params: { link: string } }) => {
   const searchParams = useSearchParams();
   const encodedLink = params.link;
   const [decodedLink, setDecodedLink] = useState<string | null>(null);
+  const [ad, setAd] = useState<{ imageUrl: string; websiteUrl: string } | null>(null);
 
   useEffect(() => {
     if (encodedLink) {
@@ -27,30 +42,26 @@ const Ads = ({ params }: { params: { link: string } }) => {
     }
   }, [encodedLink, searchParams]);
 
+  useEffect(() => {
+    // Replace this with actual API call
+    getAdByAdId("2").then(ad => {
+      setAd(ad);
+    });
+  }, []);
+
   if (!decodedLink) {
     return <div>...Loading</div>;
   }
-  const adList = [
-    {
-      name: "Yıldırım Sekerleme",
-      description:
-        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis",
-    },
-    {
-      name: "Yıldırım Sekerleme",
-      description:
-        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiisAt vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiisAt vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis",
-    },
-  ];
+
   return (
     <div className="flex flex-col items-center h-screen gap-0 py-12 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
-        <AdCard name={adList[0].name} description={adList[0].description} />
+        {ad && <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} />}
         <div className="w-full">
           <iframe
             src={`https://${decodedLink}`}
             width="100%"
-            height="1000px"
+            height="750px"
             style={{ border: "none" }}
             title={"site"}
           />
