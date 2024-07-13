@@ -474,13 +474,13 @@ const externalContracts = {
   },
   534351: {
     AdContract: {
-      address: "0xc9f8f36AAd4aB3336E17FE37FcFd1EfADe5d7205",
+      address: "0xaDFD90Ec12Bf1c43c429623A03a4B5123a746495",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "_mailboxAddress",
+              name: "mailboxAddress",
               type: "address",
             },
           ],
@@ -519,6 +519,12 @@ const externalContracts = {
               internalType: "uint256",
               name: "budget",
               type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "bool[5]",
+              name: "adVector",
+              type: "bool[5]",
             },
           ],
           name: "AdCreated",
@@ -590,27 +596,27 @@ const externalContracts = {
           inputs: [
             {
               internalType: "string",
-              name: "_adTitle",
+              name: "adTitle",
               type: "string",
             },
             {
               internalType: "string",
-              name: "_adContent",
+              name: "adContent",
               type: "string",
             },
             {
               internalType: "uint256",
-              name: "_durationInSeconds",
+              name: "durationInSeconds",
               type: "uint256",
             },
             {
               internalType: "uint256",
-              name: "_budget",
+              name: "budget",
               type: "uint256",
             },
             {
               internalType: "bool[5]",
-              name: "_adVector",
+              name: "adVector",
               type: "bool[5]",
             },
           ],
