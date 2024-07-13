@@ -6,7 +6,7 @@ const WebsiteCard = ({ name, url, imgSrc }) => {
   return (
     <Link
       href={`/ads/${url}`}
-      className="flex flex-row justify-between items-center w-[400px] h-[120px] border-2 border-white rounded p-4 m-4 hover:bg-custom-gradient hover:text-black"
+      className="flex flex-row justify-between items-center w-[400px] h-[120px] border-2 border-white rounded p-4 m-4 hover:bg-custom-gradient hover:text-black transition-all duration-700 ease-in-out"
     >
       <img className="max-w-[80px] max-h-[80px]" src={imgSrc} />
       <div className="text-center">
@@ -35,6 +35,11 @@ const Websites = () => {
       name: "GraphQL",
       url: "graphql.org",
       imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png",
+    },
+    {
+      name: "Metamask",
+      url: "metamask.io",
+      imgSrc: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/800px-MetaMask_Fox.svg.png",
     },
     {
       name: "Zircuit",

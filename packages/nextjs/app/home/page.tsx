@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { useAccount } from "wagmi";
 import externalContracts from "~~/contracts/externalContracts";
+import { pieChartData } from "~~/utils/data";
 
 interface CheckboxOption {
   name: string;
@@ -87,13 +88,9 @@ const Home = () => {
     hash,
   });
 
-  const checkboxOptions: CheckboxOption[] = [
-    { name: "option1", value: "Option 1" },
-    { name: "option2", value: "Option 2" },
-    { name: "option3", value: "Option 3" },
-    { name: "option4", value: "Option 4" },
-    { name: "option5", value: "Option 5" },
-  ];
+  const checkboxOptions: CheckboxOption[] = pieChartData.map(data => {
+    return { name: data, value: data };
+  });
 
   const [selectedCheckboxesAdvertiser, setSelectedCheckboxesAdvertiser] = useState<boolean[]>(
     new Array(checkboxOptions.length).fill(false),

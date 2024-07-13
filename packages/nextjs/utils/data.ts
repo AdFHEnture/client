@@ -1,1 +1,1 @@
-export const pieChartData = ["Developers", "Adults", "Children", "Children", "Adults"];
+export const pieChartData = ["Developers", "Designers", "Doctors", "+18", "Students"];

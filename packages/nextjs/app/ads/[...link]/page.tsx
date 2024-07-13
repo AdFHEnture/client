@@ -22,7 +22,7 @@ const Ads = ({ params }: { params: { link: string } }) => {
   useEffect(() => {
     if (encodedLink) {
       const fullLink = decodeURIComponent(encodedLink);
-      const fullUrl = `${fullLink}${searchParams ? `?${searchParams.toString()}` : ""}`;
+      const fullUrl = `${fullLink}${searchParams ? `?${searchParams.toString()}` : ""}`.replaceAll(",", "/");
       setDecodedLink(fullUrl);
     }
   }, [encodedLink, searchParams]);
