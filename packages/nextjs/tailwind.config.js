@@ -83,6 +83,15 @@ module.exports = {
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #E7F3C6, white, #E7F3C6)',
+      },
+      transitionProperty: {
+        'width': 'width',
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'bg': 'background-color, background-image',
+      }
     },
   },
 };

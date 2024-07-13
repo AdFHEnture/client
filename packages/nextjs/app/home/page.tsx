@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import logo from "../../components/assets/logo.svg";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
@@ -14,13 +16,26 @@ interface CheckboxOption {
   value: string;
 }
 
-const Page3Page = () => {
+const Home = () => {
   const { chain } = useAccount();
   const { data: hash, error, writeContract } = useWriteContract();
   const [adName, setAdName] = useState("");
   const [description, setDescription] = useState("");
   const [userType, setUserType] = useState("advertiser");
-  const [, setWeek] = useState(1);
+  const [week, setWeek] = useState(1);
+
+  const handleToggle = (type: string) => {
+    setUserType(type);
+    refreshParameters();
+  };
+
+  const refreshParameters = () => {
+    setAdName("");
+    setDescription("");
+    setWeek(1);
+    setSelectedCheckboxesAdvertiser([]);
+    setSelectedCheckboxesUser([]);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,13 +67,13 @@ const Page3Page = () => {
     { name: "option1", value: "Option 1" },
     { name: "option2", value: "Option 2" },
     { name: "option3", value: "Option 3" },
-    { name: "option4", value: "Option 4" },
-    { name: "option5", value: "Option 5" },
+    { name: "option4", value: "Opt ion 4" },
+    { name: "option5", value: "Opt ion 5" },
     { name: "option6", value: "Option 6" },
-    { name: "option4", value: "Option 7" },
+    { name: "option4", value: "Opti on 7" },
     { name: "option5", value: "Option 8" },
     { name: "option6", value: "Option 9" },
-    { name: "option6", value: "Option 10" },
+    { name: "option6", value: "Opti on 10" },
   ];
 
   const [selectedCheckboxesUser, setSelectedCheckboxesUser] = useState<boolean[]>(
@@ -87,30 +102,25 @@ const Page3Page = () => {
   return (
     <div className="flex flex-col items-center h-screen gap-4 p-12">
       <div className="flex flex-col items-center justify-center">
-        <h1 className="text-6xl font-bold bg-gradient-to-r from-white to-[#E7F3C6] bg-clip-text text-transparent">
-          AdFHEnture
-        </h1>
+        <Image priority src={logo} alt="" />
+        <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
         <h2 className="text-xl text-white text-center">
           Neque porro quisquam est qui <br /> dolorem
         </h2>
       </div>
       <div>
         <button
-          onClick={() => setUserType("advertiser")}
-          className={`w-[250px] h-[50px] rounded-l-lg ${
-            userType === "user"
-              ? "text-white text-xl bg-[#262626]"
-              : "text-black text-xl bg-gradient-to-r from-white to-[#E7F3C6]"
+          onClick={() => handleToggle("advertiser")}
+          className={`w-[225px] h-[40px] rounded-l-lg transition-all duration-700 ease-in-out ${
+            userType === "user" ? "text-white text-xl bg-[#262626]" : "text-black text-xl bg-custom-gradient"
           } `}
         >
           For Advertisers
         </button>
         <button
-          onClick={() => setUserType("user")}
-          className={`w-[250px] h-[50px] rounded-r-lg ${
-            userType === "advertiser"
-              ? "text-white text-xl bg-[#262626]"
-              : "text-black text-xl bg-gradient-to-r from-white to-[#E7F3C6]"
+          onClick={() => handleToggle("user")}
+          className={`w-[225px] h-[40px] rounded-r-lg transition-all duration-700 ease-in-out ${
+            userType === "advertiser" ? "text-white text-xl bg-[#262626]" : "text-black text-xl bg-custom-gradient"
           } `}
         >
           For Users
@@ -120,7 +130,7 @@ const Page3Page = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-3/5 h-full justify-center items-center">
           <div className="flex flex-col w-full h-full justify-center items-center">
             <div className="flex flex-col justify-center  w-1/2 mx-2 h-3/4 rounded p-4 relative">
-              <span className="text-3xl text-center my-2">Publish new Ad</span>
+              <span className="text-2xl text-center my-2">Publish new Ad</span>
               <div className="flex flex-col mb-4">
                 <div className="flex items-center border border-gray-300 rounded-lg bg-[#262626] p-2 w-full">
                   <FontAwesomeIcon icon={faUser} className="text-[#6F7482] mr-2" />
@@ -138,12 +148,15 @@ const Page3Page = () => {
                   placeholder="Description"
                   value={description}
                   onChange={e => setDescription(e.target.value)}
-                  rows={4}
+                  rows={3}
                   className="p-8 border border-gray-300 rounded-lg bg-[#262626] text-[#6F7482] w-full"
                 />
               </div>
               <div className="flex flex-col w-full">
-                Expiry Date
+                <div className="w-full flex flex-row justify-between items-center">
+                  <span className="text-xl">Expiry Date</span>
+                  <span className="text-xl text-center w-20">{week} week</span>
+                </div>
                 <Slider
                   aria-label="Date"
                   defaultValue={1}
@@ -156,14 +169,26 @@ const Page3Page = () => {
                   marks
                   min={1}
                   max={6}
+                  sx={{
+                    color: "#E7F3C6", // Ana renk
+                    "& .MuiSlider-thumb": {
+                      backgroundColor: "#262626", // Thumb rengi
+                    },
+                    "& .MuiSlider-track": {
+                      backgroundColor: "#262626", // Track rengi
+                    },
+                    "& .MuiSlider-rail": {
+                      backgroundColor: "#E7F3C6", // Rail rengi
+                    },
+                  }}
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-center w-1/2 h-full mx-2 rounded p-2 relative">
-              <span className="text-4xl text-center mb-2">Target Audience</span>
+            <div className="flex flex-col justify-center items-center w-1/2 h-full mx-2 rounded p-2 relative">
+              <span className="text-2xl text-center mb-2">Target Audience</span>
               <div className="grid grid-cols-2">
                 {checkboxOptions.map((option, index) => (
-                  <div key={index} className="flex justify-center items-center rounded-lg p-2 my-2 cursor-pointer">
+                  <div key={index} className="flex justify-start items-center rounded-lg px-8 my-2 cursor-pointer">
                     <input
                       type="checkbox"
                       id={`checkbox-${index}`}
@@ -187,7 +212,7 @@ const Page3Page = () => {
           </div>
           <button
             type="submit"
-            className="w-[250px] h-[50px] text-black text-xl bg-gradient-to-r from-white to-[#E7F3C6]"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110"
           >
             Pay & Submit
           </button>
@@ -195,9 +220,9 @@ const Page3Page = () => {
       ) : (
         <div className="flex flex-col justify-center items-center w-full h-full mx-2 rounded p-4 relative">
           <span className="text-4xl text-center mt-4 mb-8">Create Profile</span>
-          <div className="grid grid-cols-2 w-1/2">
+          <div className="grid grid-cols-2 w-1/4">
             {checkboxOptions.map((option, index) => (
-              <div key={index} className="flex justify-center items-center rounded-lg p-2 my-2 cursor-pointer">
+              <div key={index} className="flex justify-start items-center rounded-lg pr-6 pl-8 my-2 cursor-pointer">
                 <input
                   type="checkbox"
                   id={`checkbox-${index}`}
@@ -219,7 +244,7 @@ const Page3Page = () => {
           </div>
           <button
             type="submit"
-            className="w-[250px] h-[50px] text-black text-xl bg-gradient-to-r from-white to-[#E7F3C6] mt-8"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient mt-8 transition-all duration-300 hover:scale-110"
             onClick={handleSubmitCreateProfile}
           >
             Submit
@@ -234,4 +259,4 @@ const Page3Page = () => {
   );
 };
 
-export default Page3Page;
+export default Home;
