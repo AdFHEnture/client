@@ -19,7 +19,7 @@ type HeaderMenuLink = {
 export const menuLinks: HeaderMenuLink[] = [
   {
     label: "Home",
-    href: "/home",
+    href: "/",
     icon: <WalletIcon className="h-4 w-4" />,
   },
   {
@@ -97,7 +97,6 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">AdFHEnture</span>
-            <span className="text-xs">Lorem Ipsum Lorem</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">

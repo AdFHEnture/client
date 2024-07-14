@@ -15,11 +15,11 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({ name, url, imgSrc }) => {
       className="relative flex flex-row justify-center items-start w-[400px] h-[150px] border-2 border-white rounded p-4 m-4 overflow-hidden"
     >
       <img
-        className="absolute left-0 top-0 w-full h-full object-cover opacity-50 transition-transform duration-700 ease-in-out hover:scale-110 z-0"
+        className="absolute left-0 top-0 w-full h-full object-cover opacity-70 transition-transform duration-700 ease-in-out hover:scale-110 z-0"
         src={imgSrc}
         alt=""
       />
-      <span className="absolute top-0 text-2xl bg-custom-gradient bg-clip-text text-transparent font-bold pointer-events-none">
+      <span className="absolute left-2 top-1 text-2xl bg-custom-gradient bg-clip-text text-transparent font-bold pointer-events-none">
         {name}
       </span>
     </Link>
@@ -62,10 +62,10 @@ const Websites = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center h-screen gap-0 py-12 w-full">
+    <div className="flex flex-col items-center gap-0 py-12 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
         <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">WEBSITES</h1>
-        <div className="grid grid-cols-2 w-full items-center justify-items-center px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 w-full items-center justify-items-center px-16">
           {websiteList.map(site => (
             <WebsiteCard name={site.name} url={site.url} imgSrc={site.imgSrc} key={site.name} />
           ))}

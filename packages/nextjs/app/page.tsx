@@ -29,7 +29,7 @@ const Home = () => {
 
   const handleToggle = (type: string) => {
     refreshParameters();
-    router.push(`/home/?tab=${type === "user" ? "users" : "advertiser"}`);
+    router.push(`/?tab=${type === "user" ? "users" : "advertiser"}`);
   };
 
   useEffect(() => {
@@ -136,13 +136,13 @@ const Home = () => {
   }, [userVector]);
 
   return (
-    <div className="flex flex-col items-center h-screen gap-4 p-12">
+    <div className="flex flex-col items-center gap-4 pt-12">
       <div className="flex flex-col items-center justify-center">
         {/* <Image priority src={logo} alt="" /> */}
         <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
-        <h2 className="text-xl text-white text-center">
+        {/* <h2 className="text-xl text-white text-center">
           Neque porro quisquam est qui <br /> dolorem
-        </h2>
+        </h2> */}
       </div>
       <div>
         <button
@@ -163,9 +163,12 @@ const Home = () => {
         </button>
       </div>
       {userType === "advertiser" ? (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-3/5 h-full justify-center items-center">
-          <div className="flex flex-col w-full h-full justify-center items-center">
-            <div className="flex flex-col justify-center  w-1/2 mx-2 h-3/4 rounded p-4 relative">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 lg:w-3/5 md:w-4/5 w-full justify-center items-center"
+        >
+          <div className="flex flex-col w-full justify-center items-center">
+            <div className="flex flex-col justify-center  w-1/2 mx-2 rounded px-4 relative">
               <span className="text-2xl text-center my-2">Publish new Ad</span>
               <div className="flex flex-col mb-4">
                 <div className="flex items-center border border-gray-300 rounded-lg bg-[#262626] p-2 w-full">
@@ -190,7 +193,7 @@ const Home = () => {
                 />
               </div>
               <div className="flex flex-col w-full mt-4">
-                <div className="w-full flex flex-row justify-between items-center">
+                <div className="w-full flex flex-row justify-between items-center mt-6">
                   <span className="text-xl">Expiry Date</span>
                   <span className="text-xl text-center w-20">{week} week</span>
                 </div>
@@ -221,8 +224,8 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center w-1/2 h-full mx-2 rounded p-2 relative">
-              <span className="text-2xl text-center mb-2">Target Audience</span>
+            <div className="flex flex-col justify-center items-center w-1/2 mx-2 rounded p-2 relative">
+              <span className="text-2xl text-center mb-4 mt-2">Target Audience</span>
               <div className="grid grid-cols-2">
                 {checkboxOptions.map((option, index) => (
                   <div key={index} className="flex justify-start items-center rounded-lg px-8 my-2 cursor-pointer">

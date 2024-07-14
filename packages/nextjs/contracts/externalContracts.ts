@@ -3,7 +3,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const externalContracts = {
   8008135: {
     AdMatcher: {
-      address: "0xb77a73524f32Ae60aa33CAE2C76ea498171EfdAc",
+      address: "0x14BEca5CFb732b8F454e72939A6fC08001F0bD84",
       abi: [
         {
           inputs: [],
@@ -67,6 +67,37 @@ const externalContracts = {
           anonymous: false,
           inputs: [],
           name: "EIP712DomainChanged",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint32",
+              name: "",
+              type: "uint32",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          name: "Received",
           type: "event",
         },
         {
@@ -276,6 +307,19 @@ const externalContracts = {
             },
           ],
           name: "findBestAdPermitSealedFromSenderAddressWithoutPermit",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAdsCount",
           outputs: [
             {
               internalType: "uint256",

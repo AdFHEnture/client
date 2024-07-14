@@ -53,7 +53,7 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen gap-0 py-12 w-full">
+    <div className="flex flex-col items-center gap-0 py-12 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
         <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">
           {params.walletId ? `${params.walletId.slice(0, 4)}....${params.walletId.slice(-4)}` : "ADVERTISER"}
@@ -68,9 +68,9 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
                 data: interestsData ? returnInterestData(interestsData) : [],
                 innerRadius: 30,
                 cornerRadius: 10,
-                paddingAngle: 5,
+                paddingAngle: 2,
                 highlightScope: { faded: "global", highlighted: "item" },
-                faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
+                faded: { innerRadius: 10, additionalRadius: -10, color: "gray" },
                 arcLabel: item => `${item.label} (${item.value}%)`,
                 arcLabelMinAngle: 45,
               },
@@ -85,9 +85,6 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
               ads.map((ad: { imageUrl: string; websiteUrl: string }) => {
                 return (
                   <span key={ad.imageUrl} className="w-[120px] h-[80px] mx-4 relative border-2 border-white rounded">
-                    <span className="absolute left-1 top-1 bg-black z-10 border-2 border-white w-[36px] h-[20px] rounded text-center text-xs text-white">
-                      Ad
-                    </span>
                     <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} />
                   </span>
                 );
