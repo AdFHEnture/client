@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAccount, useReadContract } from "wagmi";
 import { getAdByAdId } from "~~/api";
 import externalContracts from "~~/contracts/externalContracts";
 
-const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
-  const { imageUrl, websiteUrl } = props;
+const AdCard = (props: { imageUrl: string; websiteUrl: string; wallet: string }) => {
+  const { imageUrl, websiteUrl, wallet } = props;
   return (
     <a
       className="w-[400px] h-[90px] text-center rounded-lg p-2 m-2 absolute bottom-4 left-4 shadow-xl"
@@ -23,6 +24,12 @@ const AdCard = (props: { imageUrl: string; websiteUrl: string }) => {
       <div className="absolute inset-0 rounded-lg bg-black opacity-30"></div>
       <div className="relative z-10">
         <div className="absolute left-0 top-0 border w-[36px] h-[20px] rounded text-center text-xs text-white">Ad</div>
+        <Link
+          href={`/advertiser/${wallet}`}
+          className="absolute right-0 top-0 border w-[64px] h-[20px] rounded text-center text-xs text-white"
+        >
+          Advertisor
+        </Link>
       </div>
     </a>
   );
@@ -33,7 +40,7 @@ const Ads = ({ params }: { params: { link: string } }) => {
   const encodedLink = params.link;
   const { address } = useAccount();
   const [decodedLink, setDecodedLink] = useState<string | null>(null);
-  const [ad, setAd] = useState<{ imageUrl: string; websiteUrl: string } | null>(null);
+  const [ad, setAd] = useState<{ imageUrl: string; websiteUrl: string; advertiser: { wallet: string } } | null>(null);
 
   const {
     data: bestAd,
@@ -72,7 +79,7 @@ const Ads = ({ params }: { params: { link: string } }) => {
   return (
     <div className="flex flex-col items-center h-screen gap-0 py-0 w-full">
       <div className="flex flex-col items-center justify-center w-full relative">
-        {ad && <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} />}
+        {ad && <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} wallet={ad.advertiser?.wallet} />}
         <div className="w-full">
           <iframe
             src={`https://${decodedLink}`}

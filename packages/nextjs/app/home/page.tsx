@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
@@ -23,10 +24,22 @@ const Home = () => {
   const [userType, setUserType] = useState("advertiser");
   const [week, setWeek] = useState(1);
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleToggle = (type: string) => {
-    setUserType(type);
     refreshParameters();
+    router.push(`/home/?tab=${type === "user" ? "users" : "advertiser"}`);
   };
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab === "users") {
+      setUserType("user");
+    } else if (tab === "advertiser") {
+      setUserType("advertiser");
+    }
+  }, [searchParams]);
 
   const refreshParameters = () => {
     setAdName("");

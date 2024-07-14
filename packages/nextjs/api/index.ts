@@ -8,6 +8,12 @@ const getAdvertiserQuery = `
         wallet
         totalPaid
         interests
+        ads {
+            id
+            imageUrl
+            websiteUrl
+            adVector
+        }
       }
     }
 `;
@@ -18,6 +24,9 @@ const getAdQueryByAdId = `
       id
       imageUrl
       websiteUrl
+      advertiser {
+        wallet
+      }
     }
   }
 `;

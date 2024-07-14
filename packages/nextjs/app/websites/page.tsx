@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 
-const WebsiteCard = ({ name, url, imgSrc }) => {
+interface WebsiteCardProps {
+  name: string;
+  url: string;
+  imgSrc: string;
+}
+
+const WebsiteCard: React.FC<WebsiteCardProps> = ({ name, url, imgSrc }) => {
   return (
     <Link
       href={`/ads/${url}`}
@@ -11,6 +17,7 @@ const WebsiteCard = ({ name, url, imgSrc }) => {
       <img
         className="absolute left-0 top-0 w-full h-full object-cover opacity-50 transition-transform duration-700 ease-in-out hover:scale-110 z-0"
         src={imgSrc}
+        alt=""
       />
       <span className="absolute top-0 text-2xl bg-custom-gradient bg-clip-text text-transparent font-bold pointer-events-none">
         {name}
