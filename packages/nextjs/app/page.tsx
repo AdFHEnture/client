@@ -1,121 +1,307 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
-import { sendTransaction, signMessage } from "~~/lib/dynamic";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Slider from "@mui/material/Slider";
+import "react-datepicker/dist/react-datepicker.css";
+import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import externalContracts from "~~/contracts/externalContracts";
+import { pieChartData } from "~~/utils/data";
 
-const Home: NextPage = () => {
-  const { primaryWallet, networkConfigurations } = useDynamicContext();
-  const [messageSignature, setMessageSignature] = useState<string>("");
-  const [transactionSignature, setTransactionSignature] = useState<string>("");
-  const connectedAddress = primaryWallet?.address;
+interface CheckboxOption {
+  name: string;
+  value: string;
+}
 
-  const handleSignMesssage = async () => {
+const Home = () => {
+  const { chain, address } = useAccount();
+  const { data: hash, error, writeContract } = useWriteContract();
+
+  const [adName, setAdName] = useState("");
+  const [description, setDescription] = useState("");
+  const [userType, setUserType] = useState("advertiser");
+  const [week, setWeek] = useState(1);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleToggle = (type: string) => {
+    refreshParameters();
+    router.push(`/home/?tab=${type === "user" ? "users" : "advertiser"}`);
+  };
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab === "users") {
+      setUserType("user");
+    } else if (tab === "advertiser") {
+      setUserType("advertiser");
+    }
+  }, [searchParams]);
+
+  const refreshParameters = () => {
+    setAdName("");
+    setDescription("");
+    setWeek(1);
+    setSelectedCheckboxesAdvertiser(new Array(checkboxOptions.length).fill(false));
+    setSelectedCheckboxesUser(new Array(checkboxOptions.length).fill(false));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
+  const handleSubmitCreateProfile = () => {
+    if (!chain || !chain.id) {
+      return;
+    }
+
+    const contract = externalContracts[8008135].AdMatcher;
+    writeContract({
+      address: contract.address,
+      functionName: "addUserVector",
+      args: [selectedCheckboxesUser],
+      abi: contract.abi,
+    });
+  };
+
+  const handleSubmitAdvertiser = () => {
+    if (!chain || !chain.id) {
+      return;
+    }
+
+    const contract = externalContracts[534351].AdContract;
+
     try {
-      const signature = await signMessage("Hello World", primaryWallet);
-      setMessageSignature(signature);
-
-      setTimeout(() => {
-        setMessageSignature("");
-      }, 10000);
-    } catch (e) {
-      console.error(e);
+      writeContract({
+        address: contract.address,
+        functionName: "createAd",
+        args: [
+          adName,
+          description,
+          BigInt(week),
+          selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
+          "0xEFB2A0589CEC7E3aB17Dd00b44C820C66FCf0BBc",
+        ],
+        abi: contract.abi,
+      });
+    } catch (error) {
+      console.error("Error creating ad:", error);
     }
   };
 
-  const handleSendTransaction = async () => {
-    try {
-      const isTestnet = await primaryWallet?.connector?.isTestnet();
-      if (!isTestnet) {
-        alert("You're not on a testnet, proceed with caution.");
-      }
-      const hash = await sendTransaction(connectedAddress, "0.0001", primaryWallet, networkConfigurations);
-      setTransactionSignature(hash);
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
-      setTimeout(() => {
-        setTransactionSignature("");
-      }, 10000);
-    } catch (e) {
-      console.error(e);
-    }
+  const checkboxOptions: CheckboxOption[] = pieChartData.map(data => {
+    return { name: data, value: data };
+  });
+
+  const [selectedCheckboxesAdvertiser, setSelectedCheckboxesAdvertiser] = useState<boolean[]>(
+    new Array(checkboxOptions.length).fill(false),
+  );
+
+  const [selectedCheckboxesUser, setSelectedCheckboxesUser] = useState<boolean[]>(
+    new Array(checkboxOptions.length).fill(false),
+  );
+
+  const handleCheckboxChangeAdvertiser = (option: CheckboxOption) => {
+    const index = checkboxOptions.findIndex(item => item.value === option.value);
+    const newCheckboxes = [...selectedCheckboxesAdvertiser];
+    newCheckboxes[index] = !newCheckboxes[index];
+    setSelectedCheckboxesAdvertiser(newCheckboxes);
   };
+
+  const handleCheckboxChangeUser = (option: CheckboxOption) => {
+    const index = checkboxOptions.findIndex(item => item.value === option.value);
+    const newCheckboxes = [...selectedCheckboxesUser];
+    newCheckboxes[index] = !newCheckboxes[index];
+    setSelectedCheckboxesUser(newCheckboxes);
+  };
+
+  const { data: userVector } = useReadContract({
+    address: externalContracts[8008135].AdMatcher.address,
+    functionName: "getUserVector",
+    args: [address || "0x"],
+    abi: externalContracts[8008135].AdMatcher.abi,
+  });
+
+  useEffect(() => {
+    if (userVector && userVector.length > 0 && userVector[0] != null) {
+      setSelectedCheckboxesUser(userVector as boolean[]);
+    }
+  }, [userVector]);
 
   return (
-    <>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
-          </div>
-          {primaryWallet && !transactionSignature && (
-            <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
-              <button onClick={() => handleSendTransaction()} className="btn btn-primary">
-                Send 0.001 ETH to yourself
-              </button>
-              <button onClick={() => handleSignMesssage()} className="btn btn-primary">
-                Sign Hello World
-              </button>
-            </div>
-          )}
-          {primaryWallet && messageSignature && (
-            <p className="text-center-text-lg">Message signed! {messageSignature}</p>
-          )}
-          {primaryWallet && transactionSignature && (
-            <p className="text-center-text-lg">Transaction processed! {transactionSignature}</p>
-          )}
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col items-center h-screen gap-4 p-12">
+      <div className="flex flex-col items-center justify-center">
+        {/* <Image priority src={logo} alt="" /> */}
+        <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
+        <h2 className="text-xl text-white text-center">
+          Neque porro quisquam est qui <br /> dolorem
+        </h2>
       </div>
-    </>
+      <div>
+        <button
+          onClick={() => handleToggle("advertiser")}
+          className={`w-[225px] h-[40px] rounded-l-lg transition-all duration-700 ease-in-out ${
+            userType === "user" ? "text-white text-xl bg-[#262626]" : "text-black text-xl bg-custom-gradient"
+          } `}
+        >
+          For Advertisers
+        </button>
+        <button
+          onClick={() => handleToggle("user")}
+          className={`w-[225px] h-[40px] rounded-r-lg transition-all duration-700 ease-in-out ${
+            userType === "advertiser" ? "text-white text-xl bg-[#262626]" : "text-black text-xl bg-custom-gradient"
+          } `}
+        >
+          For Users
+        </button>
+      </div>
+      {userType === "advertiser" ? (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-3/5 h-full justify-center items-center">
+          <div className="flex flex-col w-full h-full justify-center items-center">
+            <div className="flex flex-col justify-center  w-1/2 mx-2 h-3/4 rounded p-4 relative">
+              <span className="text-2xl text-center my-2">Publish new Ad</span>
+              <div className="flex flex-col mb-4">
+                <div className="flex items-center border border-gray-300 rounded-lg bg-[#262626] p-2 w-full">
+                  <FontAwesomeIcon icon={faUser} className="text-[#6F7482] mr-2" />
+                  <input
+                    type="text"
+                    placeholder="Website URL"
+                    value={adName}
+                    onChange={e => setAdName(e.target.value)}
+                    className="p-2 bg-[#262626] text-[#6F7482] w-full border-none outline-none"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center border border-gray-300 rounded-lg bg-[#262626] p-2 w-full">
+                <FontAwesomeIcon icon={faImage} className="text-[#6F7482] mr-2" />
+                <input
+                  type="text"
+                  value={description}
+                  placeholder="Image URL"
+                  onChange={e => setDescription(e.target.value)}
+                  className="p-2 bg-[#262626] text-[#6F7482] w-full border-none outline-none"
+                />
+              </div>
+              <div className="flex flex-col w-full mt-4">
+                <div className="w-full flex flex-row justify-between items-center">
+                  <span className="text-xl">Expiry Date</span>
+                  <span className="text-xl text-center w-20">{week} week</span>
+                </div>
+                <Slider
+                  aria-label="Date"
+                  defaultValue={1}
+                  onChange={(event: Event, value: number | number[]) => {
+                    setWeek(value as number);
+                  }}
+                  valueLabelDisplay="auto"
+                  shiftStep={1}
+                  step={1}
+                  marks
+                  min={0}
+                  max={6}
+                  sx={{
+                    color: "#E7F3C6", // Ana renk
+                    "& .MuiSlider-thumb": {
+                      backgroundColor: "#262626", // Thumb rengi
+                    },
+                    "& .MuiSlider-track": {
+                      backgroundColor: "#262626", // Track rengi
+                    },
+                    "& .MuiSlider-rail": {
+                      backgroundColor: "#E7F3C6", // Rail rengi
+                    },
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center w-1/2 h-full mx-2 rounded p-2 relative">
+              <span className="text-2xl text-center mb-2">Target Audience</span>
+              <div className="grid grid-cols-2">
+                {checkboxOptions.map((option, index) => (
+                  <div key={index} className="flex justify-start items-center rounded-lg px-8 my-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id={`checkbox-${index}`}
+                      name={option.name}
+                      value={option.value}
+                      checked={selectedCheckboxesAdvertiser[index]}
+                      onChange={e => {
+                        e.stopPropagation();
+                        handleCheckboxChangeAdvertiser(option);
+                      }}
+                      className="w-[16px] h-[16px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
+                    />
+
+                    <label htmlFor={`checkbox-${index}`} className="text-[#6F7482] text-lg pl-4">
+                      {option.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient transition-all duration-300 hover:scale-110 mb-4 rounded"
+            onClick={handleSubmitAdvertiser}
+          >
+            Pay & Submit
+          </button>
+          {hash && <div>Transaction Hash: {hash}</div>}
+          {isConfirming && <div>Waiting for confirmation...</div>}
+          {isConfirmed && <div>Transaction confirmed.</div>}
+          {error && (
+            <div>
+              Error: {error.message} {error.name}
+            </div>
+          )}
+        </form>
+      ) : (
+        <div className="flex flex-col justify-start items-center w-full h-full mx-2 rounded p-4 relative">
+          <span className="text-4xl text-center mb-8">Create Profile</span>
+          <div className="grid grid-cols-2 w-1/4">
+            {checkboxOptions.map((option, index) => (
+              <div key={index} className="flex justify-start items-center rounded-lg pr-6 pl-8 my-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  id={`checkbox-${index}`}
+                  name={option.name}
+                  value={option.value}
+                  checked={selectedCheckboxesUser[index]}
+                  onChange={e => {
+                    e.stopPropagation();
+                    handleCheckboxChangeUser(option);
+                  }}
+                  className="w-[16px] h-[16px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 accent-[#E7F3C6]"
+                />
+
+                <label htmlFor={`checkbox-${index}`} className="text-[#6F7482] text-lg pl-4">
+                  {option.value}
+                </label>
+              </div>
+            ))}
+          </div>
+          <button
+            type="submit"
+            className="w-[250px] h-[50px] text-black text-xl bg-custom-gradient mt-8 transition-all duration-300 hover:scale-110 rounded"
+            onClick={handleSubmitCreateProfile}
+          >
+            Submit
+          </button>
+          {hash && <div>Transaction Hash: {hash}</div>}
+          {isConfirming && <div>Waiting for confirmation...</div>}
+          {isConfirmed && <div>Transaction confirmed.</div>}
+          {error && <div>Error: {error.message}</div>}
+        </div>
+      )}
+    </div>
   );
 };
 

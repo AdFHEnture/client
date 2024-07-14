@@ -23,11 +23,6 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <WalletIcon className="h-4 w-4" />,
   },
   {
-    label: "Advertiser",
-    href: "/advertiser",
-    icon: <WalletIcon className="h-4 w-4" />,
-  },
-  {
     label: "Websites",
     href: "/websites",
     icon: <WalletIcon className="h-4 w-4" />,
