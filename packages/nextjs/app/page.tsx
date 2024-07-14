@@ -6,6 +6,7 @@ import { faImage, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Slider from "@mui/material/Slider";
 import "react-datepicker/dist/react-datepicker.css";
+import toast, { Toaster } from "react-hot-toast";
 import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import externalContracts from "~~/contracts/externalContracts";
 import { pieChartData } from "~~/utils/data";
@@ -14,6 +15,33 @@ interface CheckboxOption {
   name: string;
   value: string;
 }
+
+const TransactionStatus = ({ hash, isConfirming, isConfirmed }) => {
+  const [toggleFlag, setToggleFlag] = useState(false);
+  useEffect(() => {
+    if (!toggleFlag) {
+      setToggleFlag(true);
+      return;
+    }
+    //   if (hash) {
+    //     toast.success(`Transaction Hash: ${hash}`);
+    //   }
+
+    if (isConfirming && !isConfirmed) {
+      toast.loading("Waiting for confirmation...");
+    }
+    if (isConfirmed) {
+      toast.dismiss();
+      toast.success("Transaction confirmed.");
+    }
+  }, [hash, isConfirming, isConfirmed]);
+
+  return (
+    <div>
+      <Toaster />
+    </div>
+  );
+};
 
 const Home = () => {
   const { chain, address } = useAccount();
@@ -47,6 +75,7 @@ const Home = () => {
     setWeek(1);
     setSelectedCheckboxesAdvertiser(new Array(checkboxOptions.length).fill(false));
     setSelectedCheckboxesUser(new Array(checkboxOptions.length).fill(false));
+    toast.remove();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -257,9 +286,10 @@ const Home = () => {
           >
             Pay & Submit
           </button>
-          {hash && <div>Transaction Hash: {hash}</div>}
+          {/* {hash && <div>Transaction Hash: {hash}</div>}
           {isConfirming && <div>Waiting for confirmation...</div>}
-          {isConfirmed && <div>Transaction confirmed.</div>}
+          {isConfirmed && <div>Transaction confirmed.</div>} */}
+          <TransactionStatus hash={hash} isConfirming={isConfirming} isConfirmed={isConfirmed} />
           {error && (
             <div>
               Error: {error.message} {error.name}
@@ -298,10 +328,11 @@ const Home = () => {
           >
             Submit
           </button>
-          {hash && <div>Transaction Hash: {hash}</div>}
+          {/* {hash && <div>Transaction Hash: {hash}</div>}
           {isConfirming && <div>Waiting for confirmation...</div>}
-          {isConfirmed && <div>Transaction confirmed.</div>}
+          {isConfirmed && <div>Transaction confirmed.</div>} */}
           {error && <div>Error: {error.message}</div>}
+          <TransactionStatus hash={hash} isConfirming={isConfirming} isConfirmed={isConfirmed} />
         </div>
       )}
     </div>

@@ -13453,7 +13453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hot-toast@npm:^2.4.0":
+"react-hot-toast@npm:^2.4.0, react-hot-toast@npm:^2.4.1":
   version: 2.4.1
   resolution: "react-hot-toast@npm:2.4.1"
   dependencies:
@@ -14119,6 +14119,7 @@ __metadata:
     lint-staged: ^13.0.3
     npm: ^10.8.2
     react-datepicker: ^7.3.0
+    react-hot-toast: ^2.4.1
     request: ^2.88.2
   languageName: unknown
   linkType: soft

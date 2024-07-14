@@ -82,9 +82,9 @@ const Advertiser = ({ params }: { params: { walletId: string } }) => {
           />
           <div className="grid grid-cols-2 justify-items-center items-center">
             {ads &&
-              ads.map((ad: { imageUrl: string; websiteUrl: string }) => {
+              ads.map((ad: { imageUrl: string; websiteUrl: string }, i) => {
                 return (
-                  <span key={ad.imageUrl} className="w-[120px] h-[80px] mx-4 relative border-2 border-white rounded">
+                  <span key={i} className="w-[120px] h-[80px] mx-4 relative border-2 border-white rounded">
                     <AdCard imageUrl={ad.imageUrl} websiteUrl={ad.websiteUrl || ""} />
                   </span>
                 );
