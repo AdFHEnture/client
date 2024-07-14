@@ -253,7 +253,7 @@ const Home = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center w-1/2 mx-2 rounded p-2 relative">
+            <div className="flex flex-col justify-center items-center w-3/4 mx-2 rounded p-2 relative">
               <span className="text-2xl text-center mb-4 mt-2">Target Audience</span>
               <div className="grid grid-cols-2">
                 {checkboxOptions.map((option, index) => (
@@ -299,7 +299,7 @@ const Home = () => {
       ) : (
         <div className="flex flex-col justify-start items-center w-full h-full mx-2 rounded p-4 relative">
           <span className="text-4xl text-center mb-8">Create Profile</span>
-          <div className="grid grid-cols-2 w-1/4">
+          <div className="grid grid-cols-2 w-1/3">
             {checkboxOptions.map((option, index) => (
               <div key={index} className="flex justify-start items-center rounded-lg pr-6 pl-8 my-2 cursor-pointer">
                 <input

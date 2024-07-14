@@ -1,1 +1,7 @@
-export const pieChartData = ["Designer", "Developer", "Doctor", "+18", "Student"];
+export const pieChartData = [
+  "College Student",
+  "Young Adult(18-24)",
+  "Crypto-Native",
+  "English-Speaking",
+  "In a Relationship",
+];
