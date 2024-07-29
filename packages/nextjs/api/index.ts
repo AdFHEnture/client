@@ -32,8 +32,8 @@ const getAdQueryByAdId = `
 `;
 
 const api_key = process.env.NEXT_PUBLIC_THE_GRAPH_API_KEY;
-const url = `https://gateway-arbitrum.network.thegraph.com/api/${api_key}/subgraphs/id/9VdGgQr4M1ebmYDmupgySgSfnxhBn2cEUhGeb38x1qhN`;
-// const url = "https://api.studio.thegraph.com/query/57147/adfhenture/v0.0.8";
+// const url = `https://gateway-arbitrum.network.thegraph.com/api/${api_key}/subgraphs/id/9VdGgQr4M1ebmYDmupgySgSfnxhBn2cEUhGeb38x1qhN`;
+const url = "https://api.studio.thegraph.com/query/57147/adfhenture/v0.1.1";
 export async function getAdvertiser(wallet: string) {
   const requestBody = {
     query: getAdvertiserQuery,

@@ -43,11 +43,11 @@ const Websites = () => {
       url: "thegraph.com",
       imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnHGufpCE24KXqYENnOjhp4Fcf9PvDM3kZDA&s",
     },
-    {
-      name: "Metamask",
-      url: "metamask.io",
-      imgSrc: "https://nftnow.com/wp-content/uploads/2021/10/Metamask-How-To-Asset.png",
-    },
+    // {
+    //   name: "Metamask",
+    //   url: "metamask.io",
+    //   imgSrc: "https://nftnow.com/wp-content/uploads/2021/10/Metamask-How-To-Asset.png",
+    // },
     {
       name: "Zircuit",
       url: "stake.zircuit.com/",

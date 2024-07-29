@@ -110,9 +110,9 @@ const Home = () => {
         args: [
           adName,
           description,
-          BigInt(week),
+          BigInt(0),
           selectedCheckboxesAdvertiser as [boolean, boolean, boolean, boolean, boolean],
-          "0xEFB2A0589CEC7E3aB17Dd00b44C820C66FCf0BBc",
+          "0x9431c647dB76ab75A5a9378faA2AEe1a74c45061",
         ],
         abi: contract.abi,
       });
@@ -167,11 +167,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center gap-4 pt-12">
       <div className="flex flex-col items-center justify-center">
-        {/* <Image priority src={logo} alt="" /> */}
-        <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHEnture</h1>
-        {/* <h2 className="text-xl text-white text-center">
-          Neque porro quisquam est qui <br /> dolorem
-        </h2> */}
+        <h1 className="text-4xl font-bold bg-custom-gradient bg-clip-text text-transparent">AdFHE</h1>
       </div>
       <div>
         <button
@@ -298,7 +294,7 @@ const Home = () => {
         </form>
       ) : (
         <div className="flex flex-col justify-start items-center w-full h-full mx-2 rounded p-4 relative">
-          <span className="text-4xl text-center mb-8">Create Profile</span>
+          <span className="text-4xl text-center mb-8">Edit Profile</span>
           <div className="grid grid-cols-2 w-1/3">
             {checkboxOptions.map((option, index) => (
               <div key={index} className="flex justify-start items-center rounded-lg pr-6 pl-8 my-2 cursor-pointer">

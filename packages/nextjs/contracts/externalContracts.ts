@@ -3,7 +3,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const externalContracts = {
   8008135: {
     AdMatcher: {
-      address: "0x14BEca5CFb732b8F454e72939A6fC08001F0bD84",
+      address: "0xF36B59Ce442871dCAe1DD191916622aaCf69A3cE",
       abi: [
         {
           inputs: [],
@@ -414,7 +414,7 @@ const externalContracts = {
   },
   534351: {
     AdContract: {
-      address: "0xf048a8B6eCff4B9c53f3B58227e6fCc68bf79940",
+      address: "0x9CB3290e8479267c919a2Ea331Ae9Cb0252f8f35",
       abi: [
         {
           inputs: [
